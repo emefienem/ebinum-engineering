@@ -306,19 +306,11 @@ Exploratory interest in:
 
 ## Privacy-Preserving Verification
 
-Exploratory interest in:
-
-* solvency verification
-* proof systems
-* commitment schemes
-* distributed verification models
-
-Potential future directions include:
-
-* proof batching
-* compressed verification
-* distributed proof generation
-* scalable auditing systems
+Exploratory research interests include:
+- solvency verification
+- commitment systems
+- proof aggregation
+- privacy-preserving verification models
 
 ---
 
