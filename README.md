@@ -366,6 +366,18 @@ README.md
 
 ---
 
+# Current Technical Limitations
+
+Current limitations and open questions include:
+
+- limited benchmark coverage under production-scale workloads
+- ongoing exploration of shard rebalancing strategies
+- incomplete failure recovery automation
+- lack of formal consistency guarantees across distributed operations
+- explainability overhead during high-frequency transaction bursts
+
+---
+
 # Philosophy
 
 This repository exists to document the systems engineering and infrastructure research thinking behind EBINUM.
