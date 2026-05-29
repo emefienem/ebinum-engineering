@@ -5,6 +5,27 @@
 > This repository focuses on architecture, distributed systems design decisions, latency bottlenecks, infrastructure tradeoffs, and exploratory research directions related to scalable payment infrastructure.
 
 ---
+## Status
+
+EBINUM is currently an early-stage infrastructure research and engineering project.
+
+This repository documents architectural exploration, systems design decisions, and infrastructure research directions related to scalable payment systems.
+
+The production implementation remains private.
+
+## Why This Repository Exists
+
+Most payment applications expose product features but rarely document the infrastructure tradeoffs behind transaction systems.
+
+This repository exists to explore:
+- distributed transaction coordination
+- latency bottlenecks
+- explainability constraints
+- consistency tradeoffs
+- scalable payment routing
+- operational reliability
+
+through the lens of systems engineering rather than application-layer development.
 
 # Repository Objective
 
