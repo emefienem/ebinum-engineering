@@ -352,14 +352,9 @@ Potential future research and engineering directions:
     /architecture
     /latency-research
     /risk-intelligence
-    /cryptographic-explorations
-    /diagrams
 
-/benchmarks
 
 /screenshots
-
-/research-mappings
 
 README.md
 ```
