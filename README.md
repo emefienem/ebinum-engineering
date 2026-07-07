@@ -124,32 +124,28 @@ Research interests include:
 # High-Level Architecture
 
 ```text
-                Client Applications
-                         |
-                         v
-                  API Gateway Layer
-                         |
-          --------------------------------
-          |              |              |
-          v              v              v
-   Auth Service    Payment Service   Risk Engine
-          |              |              |
-          --------------------------------
-                         |
-                 Redis Coordination
-                         |
-          --------------------------------
-          |              |              |
-          v              v              v
-        Shard 1        Shard 2        Shard N
-                         |
-                         v
-                Async Event Pipeline
-                         |
-          --------------------------------
-          |              |              |
-          v              v              v
-      Audit Logs    Analytics     Webhooks
+                                              Client Applications
+                                      │
+                                      ▼
+                               API Gateway Layer
+                                      │
+          ┌───────────────────────────┼───────────────────────────┐
+          ▼                           ▼                           ▼
+   Auth Service               Payment Service              Risk Engine
+                                    │                           ▲
+                                    │                           │
+                                    └──────────────┬────────────┘
+                                                   │
+                     ┌─────────────────────────────┼─────────────────────────────┐
+                     ▼                             ▼                             ▼
+            Redis Coordination              Audit Logger                Webhook Service
+      (Locks • Cache • Flags • State)      (Immediate Logs)         (Immediate Delivery)
+                     │
+                     ▼
+                 PostgreSQL Shards
+          ┌────────────┬────────────┬────────────┐
+          ▼            ▼            ▼
+       Shard 1      Shard 2      Shard N
 ```
 
 ---
