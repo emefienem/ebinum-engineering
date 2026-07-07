@@ -124,30 +124,28 @@ Research interests include:
 # High-Level Architecture
 
 ```text
-                                              Client Applications
-                                      │
-                                      ▼
-                               API Gateway Layer
-                                      │
-          ┌───────────────────────────┼───────────────────────────┐
-          ▼                           ▼                           ▼
-   Auth Service               Payment Service              Risk Engine
-                                    │                           ▲
-                                    │                           │
-                                    └──────────────┬────────────┘
-                                                   │
-                     ┌─────────────────────────────┼─────────────────────────────┐
-                     ▼                             ▼                             ▼
-            Redis Coordination              Audit Logger                Webhook Service
-      (Locks • Cache • Flags • State)      (Immediate Logs)         (Immediate Delivery)
-                     │
-                     ▼
-                 PostgreSQL Shards
-          ┌────────────┬────────────┬────────────┐
-          ▼            ▼            ▼
-       Shard 1      Shard 2      Shard N
+                         Client Applications
+                                 │
+                                 ▼
+                          API Gateway Layer
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        ▼                        ▼                        ▼
+  Auth Service            Payment Service           Risk Engine
+        │                        │                        │
+        └────────────────────────┼────────────────────────┘
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        ▼                        ▼                        ▼
+ Redis Coordination       Audit Logger          Webhook Service
+(Locks • Cache • State)  (Audit Events)      (Merchant Notifications)
+                                 │
+                                 ▼
+                         PostgreSQL Shards
+                  ┌──────────┬──────────┬──────────┐
+                  ▼          ▼          ▼
+               Shard 1    Shard 2    Shard N
 ```
-
 ---
 
 # Request Flow Example
