@@ -19,6 +19,18 @@ Beyond transaction processing, the long-term vision is infrastructure that helps
 
 The current MVP focuses on foundational payment infrastructure, while future work explores intelligent routing, explainable risk analysis, and operational reliability.
 
+## Vision
+
+Payments today largely answer one question:
+
+"Did the transaction succeed?"
+
+EBINUM is being built around a broader question:
+
+"Why did it succeed, why did it fail, what should happen next, and how can the system improve over time?"
+
+The long-term vision is infrastructure that combines reliable payment execution with transparent transaction intelligence to help businesses build more resilient payment operations.
+
 ## Why This Repository Exists
 
 Most payment applications expose product features but rarely document the infrastructure tradeoffs behind transaction systems.
@@ -376,3 +388,9 @@ Primary focus:
 * payment intelligence infrastructure
 
 rather than product marketing or application-layer features.
+
+## Project Scope
+
+This repository is not the production codebase.
+
+Certain implementation details, security controls, operational infrastructure, and business logic remain private while architectural concepts and engineering decisions are documented publicly.
