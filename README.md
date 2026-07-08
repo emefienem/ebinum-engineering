@@ -1,17 +1,23 @@
 # EBINUM Systems Research
 
-> Public systems engineering and infrastructure research repository for EBINUM.
+> Public systems engineering and infrastructure research for EBINUM, an intelligent payment infrastructure platform focused on building more reliable, explainable, and scalable payment systems.
 >
-> This repository focuses on architecture, distributed systems design decisions, latency bottlenecks, infrastructure tradeoffs, and exploratory research directions related to scalable payment infrastructure.
+> This repository documents the engineering decisions, architectural tradeoffs, and distributed systems research behind the platform while keeping the production implementation private.
 
 ---
 ## Status
 
-EBINUM is currently an early-stage infrastructure research and engineering project.
+EBINUM is an early-stage payment infrastructure company.
 
-This repository documents architectural exploration, systems design decisions, and infrastructure research directions related to scalable payment systems.
+The platform is currently in active development, with a private MVP implementing the core payment infrastructure while this repository documents the systems engineering decisions, architectural tradeoffs, and ongoing infrastructure research behind it.
 
-The production implementation remains private.
+## What is EBINUM?
+
+EBINUM is an early-stage payment infrastructure platform being built to improve how businesses process and understand payments.
+
+Beyond transaction processing, the long-term vision is infrastructure that helps merchants improve payment reliability, reduce operational complexity, and make payment decisions using transparent transaction intelligence.
+
+The current MVP focuses on foundational payment infrastructure, while future work explores intelligent routing, explainable risk analysis, and operational reliability.
 
 ## Why This Repository Exists
 
@@ -27,23 +33,30 @@ This repository exists to explore:
 
 through the lens of systems engineering rather than application-layer development.
 
+---
+
+# Current MVP Capabilities
+
+The current private MVP implements the core building blocks of the EBINUM platform, including:
+
+* merchant onboarding
+* API key management
+* transaction routing
+* payment intent creation
+* transaction intelligence scoring
+* audit logging
+* refunds and disputes
+* webhook processing
+* environment isolation
+* KYC-gated production access
+
+---
+
 # Repository Objective
 
-This repository is intentionally separate from the private production implementation.
+The production implementation of EBINUM remains private.
 
-The goal is to document:
-
-* distributed systems architecture
-* infrastructure tradeoffs
-* transaction consistency models
-* latency bottlenecks
-* payment routing design
-* explainability research directions
-* cryptographic verification explorations
-* scalability constraints
-* engineering observations
-
-without exposing proprietary business logic or sensitive infrastructure code.
+This public repository exists to document the systems engineering decisions behind the platform without exposing proprietary business logic or production infrastructure.
 
 ---
 
@@ -266,7 +279,7 @@ Future areas of interest:
 
 ---
 
-# Exploratory Research Mappings
+# Exploratory Engineering Mappings
 
 ## Distributed Systems
 
@@ -289,7 +302,7 @@ Relevant inspiration includes work from:
 
 ## Explainable Financial Intelligence
 
-Exploratory interest in:
+Current interest in:
 
 * interpretable transaction intelligence
 * explainable clustering
@@ -300,7 +313,7 @@ Exploratory interest in:
 
 ## Privacy-Preserving Verification
 
-Exploratory research interests include:
+Current engineering interests include:
 - solvency verification
 - commitment systems
 - proof aggregation
@@ -308,26 +321,9 @@ Exploratory research interests include:
 
 ---
 
-# Current MVP Capabilities
-
-Current infrastructure capabilities include:
-
-* merchant onboarding
-* API key management
-* transaction routing
-* payment intent creation
-* transaction intelligence scoring
-* audit logging
-* refunds and disputes
-* webhook processing
-* environment isolation
-* KYC-gated production access
-
----
-
 # Future Exploration Areas
 
-Potential future research and engineering directions:
+Potential future engineering directions:
 
 * adaptive workload scheduling
 * distributed transaction coordination
