@@ -1,6 +1,6 @@
-# EBINUM Systems Research
+# EBINUM Engineering
 
-> Public systems engineering and infrastructure research for EBINUM, an intelligent payment infrastructure platform focused on building more reliable, explainable, and scalable payment systems.
+> Public engineering and infrastructure documentation for EBINUM, an intelligent payment infrastructure platform focused on building more reliable, explainable, and scalable payment systems.
 >
 > This repository documents the engineering decisions, architectural tradeoffs, and distributed systems research behind the platform while keeping the production implementation private.
 
