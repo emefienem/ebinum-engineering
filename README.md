@@ -149,27 +149,52 @@ Research interests include:
 # High-Level Architecture
 
 ```text
-                         Client Applications
-                                 │
-                                 ▼
-                          API Gateway Layer
-                                 │
-        ┌────────────────────────┼────────────────────────┐
-        ▼                        ▼                        ▼
-  Auth Service            Payment Service           Risk Engine
-        │                        │                        │
-        └────────────────────────┼────────────────────────┘
-                                 │
-        ┌────────────────────────┼────────────────────────┐
-        ▼                        ▼                        ▼
- Redis Coordination       Audit Logger          Webhook Service
-(Locks • Cache • State)  (Audit Events)      (Merchant Notifications)
-                                 │
-                                 ▼
-                         PostgreSQL Shards
-                  ┌──────────┬──────────┬──────────┐
-                  ▼          ▼          ▼
-               Shard 1    Shard 2    Shard N
+                    CLIENT APPLICATIONS
+                           │
+                           ▼
+                    API GATEWAY LAYER
+                           │
+          ┌────────────────┼────────────────┐
+          ▼                ▼                ▼
+        AUTH           PAYMENT           MERCHANT
+       SERVICE         SERVICE           SERVICE
+                          │
+                    ┌─────┴─────┐
+                    ▼           ▼
+                 RISK       PROVIDER
+                ENGINE     ABSTRACTION
+                              │
+                         ┌────┴────┐
+                         ▼         ▼
+                      STRIPE     ADYEN
+
+
+              ┌──────────────────────────────┐
+              │     SHARED INFRASTRUCTURE    │
+              │                              │
+              │ Redis • Audit • System Flags │
+              └──────────────┬───────────────┘
+                             │
+                             ▼
+                       SHARD ROUTER
+                             │
+                  ┌──────────┴──────────┐
+                  ▼                     ▼
+             PG SHARDS             GLOBAL PG
+
+
+PAYMENT / MERCHANT / DISPUTE EVENTS
+                 │
+                 ▼
+          OUTBOX + KAFKA
+                 │
+       ┌─────────┼──────────┐
+       ▼         ▼          ▼
+   WEBHOOK     EMAIL     ANALYTICS
+   SERVICE    SERVICE     SERVICE
+
+          REDIS PUB/SUB
+      (fast, non-durable events)
 ```
 ---
 
