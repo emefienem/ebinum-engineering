@@ -198,26 +198,125 @@ PAYMENT / MERCHANT / DISPUTE EVENTS
 ```
 ---
 
-# Request Flow Example
+# Request Flow Example: Processing a payment
 
 ```text
-Incoming Request
-        ↓
-API Gateway Validation
-        ↓
-Authentication & Environment Resolution
-        ↓
-Redis Cache / Lock Lookup
-        ↓
-Deterministic Shard Routing
-        ↓
-Transaction Validation
-        ↓
-Payment Execution
-        ↓
-Async Event Emission
-        ↓
-Audit + Analytics Pipelines
+Client request
+(Idempotency-Key required)
+        │
+        ▼
+Security middleware
+(Helmet • CORS • request tracing • rate limiting • body limits)
+        │
+        ▼
+Idempotency middleware
+(Redis lock + request-hash comparison)
+        │
+        ├── Existing completed request
+        │       └── Cached response replayed
+        │
+        └── New request
+                │
+                ▼
+        Environment resolution
+        (test/live path validation)
+                │
+                ▼
+        PaymentIntent resolution
+        (Redis locator → ShardRouter lookup)
+                │
+                ▼
+        Merchant / PaymentIntent validation
+        (ownership • environment • merchant status)
+                │
+                ▼
+        Risk scoring
+        (IP • user agent • country • device fingerprint
+         • payment history/context • merchant tier)
+                │
+                ▼
+        Provider selection
+        (PaymentProviderRegistry)
+                │
+                ├── Admin provider kill switch
+                ├── Merchant-enabled providers
+                ├── Preferred provider
+                └── Provider availability/capabilities
+                │
+                ▼
+        Payment provider gateway
+        (Stripe / Adyen)
+                │
+                ├──────────────────────────────┐
+                │                              │
+                ▼                              ▼
+        Terminal outcome                 requires_action
+        SUCCEEDED / FAILED               (3DS / redirect)
+                │                              │
+                │                              ▼
+                │                    Return clientSecret /
+                │                    actionPayload to client
+                │                              │
+                │                              ▼
+                │                    Customer completes
+                │                    provider authentication
+                │                              │
+                │                              ▼
+                │                    Provider webhook /
+                │                    reconciliation
+                │
+                ▼
+        Final local outcome
+        (CAS-style PaymentIntent state transition)
+                │
+                ▼
+        Shard-scoped DB transaction
+                │
+        ┌───────┼─────────────────────────────┐
+        │       │                             │
+        ▼       ▼                             ▼
+   PaymentIntent Transaction              If SUCCEEDED:
+   finalized    created                   balance updated
+                                          revenue ledger
+                                          updated
+                │
+                ▼
+        Durable event recorded
+        in the same DB transaction
+                │
+                ▼
+        OutboxEvent
+        (transactional outbox)
+                │
+                ▼
+        OutboxWorker
+                │
+                ▼
+             Kafka
+                │
+        ┌───────┼───────────────┐
+        ▼       ▼               ▼
+      Email   Webhook       Subscription /
+               Service        Analytics
+                │
+                ▼
+        Merchant notification
+        / downstream processing
+
+Cross-cutting throughout the flow:
+    Redis
+    ├── Distributed locks
+    ├── Idempotency
+    ├── Cache / payment-intent locator
+    └── Rate limiting
+
+    AuditService
+    └── Audit events for security,
+        payment and system activity
+
+    Redis Pub/Sub
+    └── Fast, non-durable internal
+        notifications where appropriate
 ```
 
 ---
